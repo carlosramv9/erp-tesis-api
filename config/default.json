@@ -1,0 +1,79 @@
+{
+    "logger": {
+        "console": { "level": "silly" },
+        "files": [
+            { "level": "debug", "path": "./logs/", "name": "debug.log" },
+            { "level": "warn", "path": "./logs/", "name": "error.log" }
+        ]
+    },
+    "google": {
+        "client": "786863903019-lq8cg6hi7nn23j3p6bp7snu66dsj2rvp.apps.googleusercontent.com",
+        "secret": "6nn3CfJ7yAEBSHIJ4ejPjpaV"
+    },
+    "message": {
+        "entityCreate": { "msg": "Entity has been added successfully", "status": true },
+        "entityUpdate": { "msg": "Entity has been updated successfully", "status": true },
+        "entityDelete": { "msg": "Entity has been Deleted successfully", "status": true },
+        "entityActive": { "msg": "Entity has been Activated successfully", "status": true },
+        "imageUpdate": { "msg": "Image Updated successfully", "status": true },
+        "fileUpdate": { "msg": "File Updated successfully", "status": true },
+
+        "badAuth": { "msg": "Email or password is invalid", "status": false },
+        "notAuth": { "msg": "You no such to be here ;)", "status": false },
+        "badCredentials": { "msg": "You shouldn't be here >:(", "status": false },
+
+        "paramsError": { "msg": "Params Error", "status": false },
+        "dataBase": { "msg": "Database Error Contact your Admin", "status": false },
+        "entityExists": { "msg": "Entity already exists", "status": false },
+        "entityNoExists": { "msg": "Entity do not exists", "status": false }
+    },
+    "routes": {
+        "users": "users",
+        "roles": "roles",
+        "customers": "customers",
+        "properties": "properties",
+        "process": "process",
+        "processTemplates": "processTemplates",
+        "builders": "builders",
+        "divisions": "divisions",
+        "categories": "categories",
+        "models": "models",
+        "events": "events",
+        "userAttachments": "userAttachments",
+        "timeLine": "timeLine",
+        "articles": "articles",
+        "banks": "banks",
+        "investors": "investors",
+        "moveBanks": "moveBanks"
+    },
+    "permissionList": ["users", "roles", "customers", "pRent", "pSale", "pDevelopment", "pInvestment", "process", "processTemplates", "builders", "divisions", "categories", "models", "userAttachments", "articles", "events", "BankCredit", "banks", "bankMovements", "investors"],
+    "timeLineTarget": ["User", "Customer", "Role", "Property", "Process", "ProcessTemplate", "Builder", "Division", "Category", "models", "userAttachments", "events", "articles", "BankCredit", "Bank", "BankMovement", "Investor"],
+    "timeLineTargets": {
+        "user": "User",
+        "customer": "Customer",
+        "role": "Role",
+        "property": "Property",
+        "process": "Process",
+        "processTemplate": "ProcessTemplate",
+        "builder": "Builder",
+        "division": "Division",
+        "category": "Category",
+        "userAttachments": "userAttachments",
+        "article": "Article",
+        "bank": "Bank"
+    },
+    "timeLineActionType": {
+        "create": "CREATE",
+        "update": "UPDATE",
+        "remove": "DELETE",
+        "active": "ACTIVE"
+    },
+    "permissionType": {
+        "createPermissions": "createPermissions",
+        "updatePermissions": "updatePermissions",
+        "deletePermissions": "deletePermissions",
+        "readPermissions": "readPermissions"
+    },
+    "processTemplateTypes": ["new", "used"],
+    "paymentMethods": ["mix", "counted", "credit"]
+}

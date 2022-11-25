@@ -1,0 +1,8 @@
+node_modules/
+package-lock.json
+*.log
+
+#assets
+/public/uploads/
+assets/
+!assets/default.jpg
