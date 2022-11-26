@@ -19,7 +19,7 @@ const taskTemplateSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ['appointment', 'attachment', 'contract', 'dataUpdate'],
+        enum: ['Appointment', 'Attachment', 'Contract', 'dataUpdate'],
         required: [true, 'The type of Task is required'],
     },
     isRequired: {

@@ -26,7 +26,7 @@ const TaskSchema = Schema({
     },
     type: {
         type: String,
-        enum: ['appointment', 'attachment', 'contract'],
+        enum: ['Appointment', 'Attachment', 'Contract'],
         required: [true, 'The Type of task is required']
     },
     data: {
@@ -35,10 +35,19 @@ const TaskSchema = Schema({
         required: [true, 'The file path is required'],
     },
     createdBy: {
-
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     updatedBy: {
-
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    createdDate: {
+        type: Date,
+        default: Date.now
+    },
+    updatedDate: {
+        type: Date
     }
 })
 

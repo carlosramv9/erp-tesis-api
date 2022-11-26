@@ -17,7 +17,7 @@ const DEFAULT_ROLE = 'DEFAULT_ROLE';
  * @author Carlos Ramirez
  */
 
-const listProcess = async(req, res = response) => {
+const listProcess = async (req, res = response) => {
     logger.verbose('[process, listProcess]', 'List processes');
     let { page = 1, limit = 10 } = req.query;
     var since = (limit * page) - limit
@@ -25,13 +25,13 @@ const listProcess = async(req, res = response) => {
     const [total, processes] = await Promise.all([
         Process.countDocuments(),
         Process.find({})
-        .select('-steps')
-        .populate('processTemplate')
-        .populate('customer')
-        .populate('property')
-        .populate('createdBy')
-        .skip(Number(since))
-        .limit(Number(limit))
+            .select('-steps')
+            .populate('processTemplate')
+            .populate('customer')
+            .populate('property')
+            .populate('createdBy')
+            .skip(Number(since))
+            .limit(Number(limit))
     ])
     logger.debug(`Total Process Templates: ${total}`);
 
@@ -47,7 +47,7 @@ const listProcess = async(req, res = response) => {
  * @return {json} json String
  * @author Carlos Ramírez
  */
-const processGetById = async(req = request, res = response) => {
+const processGetById = async (req = request, res = response) => {
     logger.verbose('[process, processGetById]', 'Get Investors List');
     const { id } = req.params;
 
@@ -56,7 +56,8 @@ const processGetById = async(req = request, res = response) => {
         .populate('customer')
         .populate('property')
         .populate('createdBy')
-        .populate('steps');
+        .populate('steps')
+        .populate({ path: 'steps', populate: { path: 'tasks', populate: 'data' } })
 
     logger.debug(`Total Process: Success`)
     res.json(process);
@@ -69,7 +70,7 @@ const processGetById = async(req = request, res = response) => {
  * @author Carlos Ramirez 
  */
 
-const newProcess = async(req, res = response) => {
+const newProcess = async (req, res = response) => {
     logger.verbose('[process, newProcess]', 'Create a new process for a client');
     const { processTemplate, customer, property } = req.body;
 
@@ -120,7 +121,7 @@ const newProcess = async(req, res = response) => {
  * @author Carlos Ramirez 
  */
 
-const newTask = async(req, res = response) => {
+const newTask = async (req, res = response) => {
     logger.verbose('[process, newTask]', 'Add a new task into a step');
     const file = req.file;
     const { stepId, processTemplateId } = req.params;
@@ -135,7 +136,7 @@ const newTask = async(req, res = response) => {
 
         if (!currentProcessTemplate && !currentStep) return res.json(entityNoExists);
         const taskTemplate = await currentProcessTemplate.steps[currentStep.index - 1].tasks.find(task => task.index == index);
-        logger.debug(taskTemplate);
+        //logger.debug(taskTemplate);
         switch (taskTemplate.type) {
             case 'attachment':
                 task = await _processAttachmentsType(file, taskTemplate, body, req.user);
@@ -165,10 +166,10 @@ const newTask = async(req, res = response) => {
  * @author Carlos Ramirez 
  */
 
-const _processAttachmentsType = async(file, taskTemplate, body, user) => {
+const _processAttachmentsType = async (file, taskTemplate, body, user) => {
     logger.verbose('[(process, _processAttachmentsType)', 'process an Attachment');
     const { name } = body;
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             const attachmentData = {
                 name,
@@ -205,10 +206,10 @@ const _processAttachmentsType = async(file, taskTemplate, body, user) => {
  * @author Carlos Ramirez 
  */
 
-const _processContractType = async(file, taskTemplate, body, user) => {
+const _processContractType = async (file, taskTemplate, body, user) => {
     logger.verbose('[(process, _processContractType)', 'process an Attachment');
     const { customer, type, name, note } = body;
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
 
             const attachmentData = {
@@ -257,11 +258,11 @@ const _processContractType = async(file, taskTemplate, body, user) => {
  * @author Carlos Ramirez 
  */
 
-const _processAppointmentType = async(taskTemplate, body, user) => {
+const _processAppointmentType = async (taskTemplate, body, user) => {
     logger.verbose('[(process, _processAppointmentType)', 'process an Attachment');
     const { place, date, customer, participants = [] } = body;
     logger.debug(participants)
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             participants.push(user._id);
             const appointmentData = {
