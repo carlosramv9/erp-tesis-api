@@ -6,7 +6,7 @@ const { v4 } = require('uuid');
 const { process } = require('config').get('routes');
 const { createPermissions, updatePermissions, deletePermissions, readPermissions } = require('config').get('permissionType');
 //Controllers
-const { newProcess, listProcess, newTask, processGetById } = require('../controllers/processController');
+const { newProcess, listProcess, newTask, processGetById, verifyAppointment, finishTask, updateTask, newStep, changeCurrentStep, addCommentStep, activeProcess, cancelProcess } = require('../controllers/processController');
 //middlewares
 const { permission } = require('../middlewares/RoleValidation');
 const { validationFields } = require('../middlewares/validation-fields');
@@ -51,21 +51,69 @@ router.post('/', [
     validationFields
 ], newProcess);
 
+router.post('/comment/:stepId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    check('comment', 'The comment is required').notEmpty(),
+    check('stepId', 'The step id is required').notEmpty().isMongoId(),
+    validationFields
+], addCommentStep);
+
 ////////////////////////////////////Put////////////////////////////////////
 router.put('/nextstep/:processId', [
     jwtValidation,
     permission(updatePermissions, process),
-    check('index').notEmpty().isNumeric(),
-    check('customer', 'The customer id is required').notEmpty().isMongoId(),
-    check('property', 'The property id is required').notEmpty().isMongoId(),
+    check('processId', 'The process id is required').notEmpty().isMongoId(),
     validationFields
-], newProcess);
+], newStep);
 
 router.put('/addtask/:stepId/:processTemplateId', [
     jwtValidation,
     permission(updatePermissions, process),
-    uploadFile.single('taskFile'),
+    uploadFile.array('taskFile'),
     validationFields
 ], newTask);
+
+router.put('/task/:taskId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    uploadFile.array('taskFile'),
+    validationFields
+], updateTask);
+
+router.put('/appointment/:appointmentId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    validationFields
+], verifyAppointment);
+
+router.put('/changestep/:processId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    check('processId', 'The process id is required').notEmpty().isMongoId(),
+    validationFields
+], changeCurrentStep);
+
+router.put('/active/:processId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    check('processId', 'The process id is required').notEmpty().isMongoId(),
+    validationFields
+], activeProcess);
+
+////////////////////////////////////Delete////////////////////////////////////
+
+router.delete('/cancel/:processId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    check('processId', 'The process id is required').notEmpty().isMongoId(),
+    validationFields
+], cancelProcess);
+
+router.delete('/task/:taskId', [
+    jwtValidation,
+    permission(updatePermissions, process),
+    validationFields
+], finishTask);
 
 module.exports = router;

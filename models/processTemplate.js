@@ -68,7 +68,7 @@ const ProcessTemplateSchema = Schema({
     },
     createdDate: {
         type: Date,
-        default:Date.now
+        default: Date.now
     },
     updatedBy: {
         type: Schema.Types.ObjectId,

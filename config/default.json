@@ -47,7 +47,7 @@
         "moveBanks": "moveBanks"
     },
     "permissionList": ["users", "roles", "customers", "pRent", "pSale", "pDevelopment", "pInvestment", "process", "processTemplates", "builders", "divisions", "categories", "models", "userAttachments", "articles", "events", "BankCredit", "banks", "bankMovements", "investors"],
-    "timeLineTarget": ["User", "Customer", "Role", "Property", "Process", "ProcessTemplate", "Builder", "Division", "Category", "models", "userAttachments", "events", "articles", "BankCredit", "Bank", "BankMovement", "Investor"],
+    "timeLineTarget": ["User", "Customer", "Role", "Property", "Process", "ProcessTemplate", "Builder", "Division", "Category", "models", "userAttachments", "events", "articles", "BankCredit", "Bank", "BankMovement", "Investor", "Task"],
     "timeLineTargets": {
         "user": "User",
         "customer": "Customer",

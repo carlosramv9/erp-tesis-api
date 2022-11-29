@@ -26,7 +26,7 @@ const getLatestCustomers = async(req, res = response) => {
 
     let query = [{ registedDate: { $gte: lateDate, $lte: currentDate } }]
     if (parseInt(req.user.role.priority.split('p')[1]) > 5 || req.user.role.priority === 'default') {
-        query.push({ idEmployee: new ObjectId(req.user._id) })
+        query.push({ idEmployee: req.user._id })
     }
 
     const [total, customers] = await Promise.all([
@@ -57,7 +57,7 @@ const getPastDueProperties = async(req, res = response) => {
 
     let query = [{ registerDate: { $lte: lateDate } }]
     if (parseInt(req.user.role.priority.split('p')[1]) > 5 || req.user.role.priority === 'default') {
-        query.push({ idEmployee: new ObjectId(req.user._id) })
+        query.push({ idEmployee: req.user._id })
     }
 
     const [total, properties] = await Promise.all([

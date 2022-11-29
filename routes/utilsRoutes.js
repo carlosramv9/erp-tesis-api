@@ -6,7 +6,7 @@ const { v4 } = require("uuid");
 const { roles } = require("config").get("routes");
 const { createPermissions, updatePermissions, deletePermissions, readPermissions } = require("config").get("permissionType");
 //Controlllers
-const { newAttachmentUser, getAttachment, deleteUserAttachment } = require("../controllers/utilsController");
+const { newAttachmentUser, getAttachment, deleteUserAttachment, getAttachmentInfo } = require("../controllers/utilsController");
 //Validator
 
 //middlewares
@@ -38,6 +38,12 @@ router.get("/attachment/:fileId", [
     uploadFile.single("file"),
     validationFields,
 ], getAttachment);
+
+router.get("/attachment/info/:fileId", [
+    jwtValidation,
+    check("fileId", "The file Id is required").isMongoId().notEmpty(),
+    validationFields,
+], getAttachmentInfo);
 
 ////////////////////////////////////POST///////////////////////////////////
 router.post("/attachment/:userId", [

@@ -58,6 +58,20 @@ const getAttachment = async(req = request, res = response) => {
     }
 };
 
+const getAttachmentInfo = async(req = request, res = response) => {
+    logger.verbose('[Utils, getAttachmentInfo]', 'get Attachment ');
+
+    const { fileId } = req.params;
+
+    try {
+        const attachment = await Attachment.findById(fileId)
+        return res.json(attachment)
+    } catch (error) {
+        logger.error(error)
+        res.status(501).json(dataBase);
+    }
+};
+
 const deleteUserAttachment = async(req = request, res = response) => {
     logger.verbose('[Utils, deleteUserAttachment]', 'delete an attachment ');
 
@@ -83,5 +97,6 @@ const deleteUserAttachment = async(req = request, res = response) => {
 module.exports = {
     newAttachmentUser,
     getAttachment,
-    deleteUserAttachment
+    deleteUserAttachment,
+    getAttachmentInfo
 }
