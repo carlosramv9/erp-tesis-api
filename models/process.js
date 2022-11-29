@@ -57,7 +57,7 @@ const ProcessSchema = Schema({
     },
     statusName: {
         type: String,
-        enum: ['En Progreso', 'Cancelado', 'Terminado'],
+        enum: ['En Progreso', 'Cancelado', 'Finalizado'],
         default: 'En Progreso'
     },
     steps: {

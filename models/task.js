@@ -32,8 +32,11 @@ const TaskSchema = Schema({
     data: {
         type: Schema.Types.ObjectId,
         refPath: 'type',
-        required: [true, 'The file path is required'],
     },
+    attachments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Attachment',
+    }],
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User'

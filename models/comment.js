@@ -8,7 +8,7 @@ const CommentsSchema = Schema({
     },
     date: {
         type: Date,
-        required: [true, 'The date is required'],
+        default: Date.now
     },
     comment: {
         type: String,

@@ -22,10 +22,9 @@ const customersGet = async(req = request, res = response) => {
     if (type === 'Buyer' || type === 'Seller') query.push({ type: type })
     logger.debug("[customer try] ", req.user.role)
 
-    if (parseInt(req.user.role.priority.split('p')[1]) > 5 || req.user.role.priority === 'default') {
+    if (parseInt(req.user.role.priority.split('p')[1]) > 5) {
         query.push({ idEmployee: new ObjectId(req.user._id) })
     }
-
     query.push({ status: true })
 
     const [total, customers] = await Promise.all([

@@ -18,6 +18,7 @@ const Contract = require('./contract');
 const BuildModel = require('./build_model');
 const Contact = require('./contacts');
 const BankCredit = require('./bankCredits');
+const Comment = require('./comment');
 
 (function populate() {
     Category.find().then(categories => {
@@ -50,4 +51,5 @@ module.exports = {
     Contract,
     Contact,
     BankCredit,
+    Comment,
 }

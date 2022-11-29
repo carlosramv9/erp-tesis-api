@@ -32,44 +32,14 @@ const propertiesGet = async(req = request, res = response) => {
     const {
         page = 1, limit = 100, type = 'ALL'
     } = req.query;
-    var query = [{ status: true }];
     var fields = ['builder', 'subdivision', 'model']
-
-    logger.debug(type)
-
-    // if (type !== 'ALL') query.push({
-    //     type,
-    //     status: true
-    // })
-
-    // if (filter) {
-    //     var status = false
-    //     for (let index = 0; index < fields.length; index++) {
-    //         switch (fields[index]) {
-    //             case 'builder':
-
-    //                 break;
-    //             case 'subdivision':
-    //                 break;
-    //             case 'model':
-    //                 break;
-
-    //             default:
-    //                 break;
-    //         }
-    //         var field = {
-    //             [fields[index].name]: {
-    //                 $regex: filter,
-    //                 $options: 'i'
-    //             },
-    //             status: true
-    //         }
-
-    //         query.push(field)
-    //     }
-    // }
-
     var since = (limit * page) - limit
+
+    var query = [];
+    if (parseInt(req.user.role.priority.split('p')[1]) > 5) {
+        query.push({ idEmployee: new ObjectId(req.user._id) })
+    }
+    query.push({ status: true })
 
     const [total, properties] = await Promise.all([
         Property.countDocuments(query),
